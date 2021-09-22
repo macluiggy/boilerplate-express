@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
-
+//esto sirve para ejecutar el paquete que servira para traer las enviroment variables
+require('dotenv').config();
 
 module.exports = app;
 
@@ -25,11 +26,28 @@ app.get("/", (req, res) => {
 app.use('/public/', express.static(__dirname+'/public'))
 
 //usamos el metodo get para traer una api, el path en get sera donde estara el json api
-app.get('/json', (req, res) => {
+/*app.get('/json', (req, res) => {
     //una vez se haga la peticion, se crea la api y se pone como argumento un objeto javascript
     //se uso '' en vez de "" para demostrar que es un objeto javascript, que luego va a ser
     //transformado en un json object
     res.json({
         "message": 'Hello json'
     })
+})*/
+
+//usamos el metodo get, el endpoint json sera donde se encontrara la api
+app.get('/json', (req, res) => {
+    //definimos el mensaje
+    let msg = 'Hello json';
+    //si la enviroment variable (variable de entorno) MESSAGE_STYLE es igual a
+    //uppercase, transformamos el mensaje en uppercase, si no, se devuelve la misma variable
+    msg = process.env.MESSAGE_STYLE === 'uppercase'
+                        ? msg.toUpperCase()
+                        : msg
+    //se usa la respuesta y el metodo json para tranformar el objeto javascript en un json
+    res.json({
+        "message": msg
+    })
 })
+
+console.log(process.env.MESSAGE_STYLE)
