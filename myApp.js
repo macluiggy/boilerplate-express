@@ -20,9 +20,6 @@ app.get("/", (req, res) => {
 
 })
 
-//sintaxis para app.use(path, middlewareFunction)path es es el endpoint (/public) donde estaran 
-//los assets, en este caso la middlewareFunction es
-//express.static(path), path es la ruta absoluta donde se encuentra el/los asset(s)
-app.use('/public/', express.static(__dirname + '/public/'))
-console.log(__dirname)
-console.log('Hello World')
+//sintax es app.use(path, middlewareFunction) path es el endpoint donde se encuentra los assets,
+//en este caso la middleware es express.static(path), el path es la ruta absoluta donde se enncuentran los assets
+app.use('/public/', express.static(__dirname+'/public'))

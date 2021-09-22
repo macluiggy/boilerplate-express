@@ -4,7 +4,7 @@
  * ***************************************************/
  
 var bGround = require('fcc-express-bground');
-var myApp = require('./practice');
+var myApp = require('./myApp');
 var express = require('express');
 var app = express();
 
