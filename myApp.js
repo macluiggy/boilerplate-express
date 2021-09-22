@@ -16,9 +16,13 @@ app.get("/", (req, res) => {
     //usando la respuesta, se usa el metodo sendFile para que de este modo se envie el archivo
     //html que queremos que el navegador lea, para eso necesitamos una ruta de archivo absoluta
     //(__dirname) el cual es el directorio donde se encuentra el archivo actual (myApp.js)
-    console.log(res.get())
     res.sendFile(`${__dirname}/views/index.html`)
 
 })
+
+//sintaxis para app.use(path, middlewareFunction)path es es el endpoint (/public) donde estaran 
+//los assets, en este caso la middlewareFunction es
+//express.static(path), path es la ruta absoluta donde se encuentra el/los asset(s)
+app.use('/public/', express.static(__dirname + '/public/'))
 console.log(__dirname)
 console.log('Hello World')
