@@ -23,3 +23,5 @@ app.get('/json', (req, res) => {
 		'hola': 'hello',
 	})
 })
+
+console.log(process.env.MESSAGE_STYLE)
