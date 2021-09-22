@@ -16,9 +16,9 @@ app.get("/", (req, res) => {
     //usando la respuesta, se usa el metodo sendFile para que de este modo se envie el archivo
     //html que queremos que el navegador lea, para eso necesitamos una ruta de archivo absoluta
     //(__dirname) el cual es el directorio donde se encuentra el archivo actual (myApp.js)
-    console.log(res.get())
     res.sendFile(`${__dirname}/views/index.html`)
 
 })
+app.use('/public/', express.static(__dirname+'/public'))
 console.log(__dirname)
 console.log('Hello World')
