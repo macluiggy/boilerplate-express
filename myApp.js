@@ -24,8 +24,12 @@ app.get("/", (req, res) => {
 //en este caso la middleware es express.static(path), el path es la ruta absoluta donde se enncuentran los assets
 app.use('/public/', express.static(__dirname+'/public'))
 
+//usamos el metodo get para traer una api, el path en get sera donde estara el json api
 app.get('/json', (req, res) => {
+    //una vez se haga la peticion, se crea la api y se pone como argumento un objeto javascript
+    //se uso '' en vez de "" para demostrar que es un objeto javascript, que luego va a ser
+    //transformado en un json object
     res.json({
-        "message": "Hello json"
+        "message": 'Hello json'
     })
 })
