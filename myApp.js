@@ -5,9 +5,16 @@ require('dotenv').config();
 
 module.exports = app;
 
+//la funcion que se encuentra dentro de app.use() es la middleware, esta toma 3 argumentos, el
+//objeto de peticion (request object), el de respesta (response object) y la funcion next() en
+//el ciclo de peticion-respuesta (request-response) de la aplicacion, este tipo de funciones 
+//ejecutan codigo que puede tener efectos secundarios, y usualmente tambien le añaden informacion
+// al objeto de repition o respuesta, estas tambien pueden terminar el ciclo cuando se envia una
+//respuesta cuando alguna condicion es topada. Si no se envia la respuesta cuando terminan, 
+//inician la ejecucion de la funcion next() en el stack. Esto desencadena la llamada el 3er 
+//argumento, next().
 app.use((req, res, next) => {
     let { method, path, ip } = req
-
     console.log(`${method} ${path} - ${ip}`)
     next()
 })
@@ -20,6 +27,7 @@ app.use((req, res, next) => {
     res.send(`/views/index.html`)
 
 })*/
+
 app.get("/", (req, res) => {
     //usando la respuesta, se usa el metodo sendFile para que de este modo se envie el archivo
     //html que queremos que el navegador lea, para eso necesitamos una ruta de archivo absoluta
@@ -60,3 +68,16 @@ app.get('/json', (req, res) => {
 
 //console.log(process.env.MESSAGE_STYLE)
 
+//las middleware se pueden montar en un path especifico usando app.METHOD(path, middleware)
+//El middleware también se puede encadenar dentro de la definición de ruta.
+app.get('/now', (req, res, next) => {
+    //ejecuta codigo dentro del middleware para actualizar los datos de la request (req)
+    //en este caso se esta añadiento una nueva propiedad (key/value) al objeto
+    req.time = new Date().toString();
+    //se llama a la funcion next() para continuar con la handler funcion
+    next()
+}, (req, res) => {
+    res.json({
+        time: req.time
+    })
+})
