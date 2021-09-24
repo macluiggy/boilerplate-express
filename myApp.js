@@ -72,12 +72,38 @@ app.get('/json', (req, res) => {
 //El middleware también se puede encadenar dentro de la definición de ruta.
 app.get('/now', (req, res, next) => {
     //ejecuta codigo dentro del middleware para actualizar los datos de la request (req)
-    //en este caso se esta añadiento una nueva propiedad (key/value) al objeto
+    //en este caso se esta añadiento una nueva propiedad (key/value) al objeto req
     req.time = new Date().toString();
     //se llama a la funcion next() para continuar con la handler funcion
     next()
 }, (req, res) => {
+    //una vez que se aña añadido la nueva propiedad, se pasa el json a la ruta
+    //conteniendo la fecha que se creo en el middleware
     res.json({
         time: req.time
+    })
+})
+
+//aqui en el endpoint la parte la parte 'word' se puede poner cualquier palabra, ya que es una
+//variable sin olvidar los dos puntos, de esta forma cualquier route parameter (las palabras que
+//estan entre los slashes) para word que el usuario ponga, se guardara en req.params.word
+app.get("/:word/echo", (req, res) => {
+    let { word } = req.params.word;
+    console.log(req.params)
+    //una vez se haya puesto una palabra para el route parameter, podremos crear la api json con
+    //con esa palabra, enviando un objeto javascript que se transforma en json y este se podra 
+    //visualizar en your-app-rootpath/whateverword/echo
+    res.json({
+        echo: req.params.word,
+    })
+})
+
+//vamos a obtener otro route parameter con mas de los mismos
+app.get('/user/:userId/book/:bookId', (req, res) => {
+    console.log(req.params)
+    const { userId, bookId } = req.params 
+    res.json({
+        userId: userId,
+        bookId: bookId,
     })
 })
