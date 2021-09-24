@@ -20,7 +20,7 @@ app.get('/json', (req, res) => {
 		'mensaje': process.env.MESSAGE_STYLE === 'uppercase'
 							? msg.toUpperCase()
 							: msg,
-		'hola': 'hello',
+		'hola': process.env.VAR_1,
 	})
 })
 

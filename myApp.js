@@ -5,6 +5,13 @@ require('dotenv').config();
 
 module.exports = app;
 
+app.use((req, res, next) => {
+    let { method, path, ip } = req
+
+    console.log(`${method} ${path} - ${ip}`)
+    next()
+})
+
 //esta estructura es app.METHOD.(PATH, HANDLER). METHOD es un metodo http, PATH es un directorio
 //especifico, HANDLER es una funcion que que Express llama cuando el PATH encaja, el HANDLER toma
 //los parametros req y res, req es un objeto de peticion y res es un objeto de respuesta
@@ -22,7 +29,8 @@ app.get("/", (req, res) => {
 })
 
 //sintax es app.use(path, middlewareFunction) path es el endpoint donde se encuentra los assets,
-//en este caso la middleware es express.static(path), el path es la ruta absoluta donde se enncuentran los assets
+//en este caso la middleware es express.static(path), el path es la ruta absoluta donde se 
+//enncuentran los assets, por ejemplo los estilos css para la pagina
 app.use('/public/', express.static(__dirname+'/public'))
 
 //usamos el metodo get para traer una api, el path en get sera donde estara el json api
@@ -50,4 +58,5 @@ app.get('/json', (req, res) => {
     })
 })
 
-console.log(process.env.MESSAGE_STYLE)
+//console.log(process.env.MESSAGE_STYLE)
+
