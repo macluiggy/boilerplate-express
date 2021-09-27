@@ -4,7 +4,7 @@
  * ***************************************************/
 let practicing = true
 var bGround = require('fcc-express-bground');
-var myApp = require(!practicing ? './practice' : './myApp');
+var myApp = require(practicing ? './practice' : './myApp');
 var express = require('express');
 var app = express();
 

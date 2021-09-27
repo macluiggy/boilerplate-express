@@ -38,7 +38,9 @@ app.get("/", (req, res) => {
 
 //sintax es app.use(path, middlewareFunction) path es el endpoint donde se encuentra los assets,
 //en este caso la middleware es express.static(path), el path es la ruta absoluta donde se 
-//enncuentran los assets, por ejemplo los estilos css para la pagina
+//enncuentran los assets, por ejemplo los estilos css para la pagina, esto quiere decir que
+//tanto en el argumento path de app.use() y el path the la middleware, se van a poner el
+//endpoint
 app.use('/public/', express.static(__dirname+'/public'))
 
 //usamos el metodo get para traer una api, el path en get sera donde estara el json api
