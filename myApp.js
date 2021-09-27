@@ -2,8 +2,11 @@ var express = require('express');
 var app = express();
 //esto sirve para ejecutar el paquete que servira para traer las enviroment variables
 require('dotenv').config();
+var bodyParser = require('body-parser')
 
 module.exports = app;
+
+
 
 //la funcion que se encuentra dentro de app.use() es la middleware, esta toma 3 argumentos, el
 //objeto de peticion (request object), el de respesta (response object) y la funcion next() en
@@ -15,7 +18,7 @@ module.exports = app;
 //argumento, next().
 app.use((req, res, next) => {
     let { method, path, ip } = req
-    console.log(`${method} ${path} - ${ip}`)
+    //console.log(`${method} ${path} - ${ip}`)
     next()
 })
 
@@ -91,7 +94,7 @@ app.get('/now', (req, res, next) => {
 //estan entre los slashes) para word que el usuario ponga, se guardara en req.params.word
 app.get("/:word/echo", (req, res) => {
     let { word } = req.params.word;
-    console.log(req.params)
+    //console.log(req.params)
     //una vez se haya puesto una palabra para el route parameter, podremos crear la api json con
     //con esa palabra, enviando un objeto javascript que se transforma en json y este se podra 
     //visualizar en your-app-rootpath/whateverword/echo
@@ -102,7 +105,7 @@ app.get("/:word/echo", (req, res) => {
 
 //vamos a obtener otro route parameter con mas de los mismos
 app.get('/user/:userId/book/:bookId', (req, res) => {
-    console.log(req.params)
+    //console.log(req.params)
     const { userId, bookId } = req.params 
     res.json({
         userId: userId,
@@ -110,13 +113,46 @@ app.get('/user/:userId/book/:bookId', (req, res) => {
     })
 })
 
-//
+//console.log(bodyParser)
+//este packete bodyParser te deja usar una serie de middlewares, las cuales pueden decodificar
+//datos en diferentes formatos
+//el middleware que se usa aqui es para manejar urlencoded data, este devuelve la urlencoded
+//data
+//esta middleware se pone antes de los siguientes métodos, debido a que los routes de estos
+//dependen de esta
+//extended es una opcion de configuracion que le dice a body-parser que parsing (analisis), debe
+//usarse. Si se pone extended=false la libreria querystring es usada. Mientras que si es
+//exteded=true, se usa la libreria qs para el parsin (analisis).
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//lo que viene despues del route path ('/name') es el query string. Este esta delimitado por
+//un question mark (?), y despues de ese viene las parejas field=value, estas se pueden dividir
+//con un ampersand (&), cuando ponenos un url con esta sintaxis
+//(/route-path?field=value&field2=value2&...fieldi=valuei&...fieldN=valueN)
+//express añade otra propiedad al objeto req, esta es req.query el cual es un objeto como este:
+/*req.query: {
+    field: value,
+    field2: value2,
+    .
+    .
+    .
+    fieldi: valuei,
+    .
+    .
+    .
+    fieldN: valueN,
+} */
+//lo de abajo se puede hacer tambien asi: app.(path).get(handler)
 app.get('/name', (req, res) => {
     //?first=firstname&last=lastname
-    console.log(req.query)
+    //console.log(req.query)
     //let firstName = req.query.firs
     let { first: firstName, last } = req.query
     res.json({
-        name: `${firstName} ${last}`
+        name: `${firstName} ${last}`,
     })
 })
+.post('/search', bodyParser.urlencoded({ extended: false }), (req, res) => {
+    console.log(req)
+})
+
