@@ -109,3 +109,14 @@ app.get('/user/:userId/book/:bookId', (req, res) => {
         bookId: bookId,
     })
 })
+
+//
+app.get('/name', (req, res) => {
+    //?first=firstname&last=lastname
+    console.log(req.query)
+    //let firstName = req.query.firs
+    let { first: firstName, last } = req.query
+    res.json({
+        name: `${firstName} ${last}`
+    })
+})
