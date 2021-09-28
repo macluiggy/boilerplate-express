@@ -113,17 +113,7 @@ app.get('/user/:userId/book/:bookId', (req, res) => {
     })
 })
 
-//console.log(bodyParser)
-//este packete bodyParser te deja usar una serie de middlewares, las cuales pueden decodificar
-//datos en diferentes formatos
-//el middleware que se usa aqui es para manejar urlencoded data, este devuelve la urlencoded
-//data
-//esta middleware se pone antes de los siguientes métodos, debido a que los routes de estos
-//dependen de esta
-//extended es una opcion de configuracion que le dice a body-parser que parsing (analisis), debe
-//usarse. Si se pone extended=false la libreria querystring es usada. Mientras que si es
-//exteded=true, se usa la libreria qs para el parsin (analisis).
-app.use(bodyParser.urlencoded({ extended: false }));
+
 
 //lo que viene despues del route path ('/name') es el query string. Este esta delimitado por
 //un question mark (?), y despues de ese viene las parejas field=value, estas se pueden dividir
@@ -154,10 +144,28 @@ app.get('/name', (req, res) => {
     //lo de arriba es para obtener un json poninedo un link con el formato correspondiente
     //en cambio lo que sigue, el metodo post, sirve para mandar los datos directamente desde
     //un html form, estos se van a guardar en el objeto req.body
-}).post('/name', (req, res) => {
+})
+
+//console.log(bodyParser)
+//este packete bodyParser te deja usar una serie de middlewares, las cuales pueden decodificar
+//datos en diferentes formatos
+//el middleware que se usa aqui es para manejar urlencoded data, este devuelve la urlencoded
+//data
+//esta middleware se pone antes de los siguientes métodos, debido a que los routes de estos
+//dependen de esta
+//extended es una opcion de configuracion que le dice a body-parser que parsing (analisis), debe
+//usarse. Si se pone extended=false la libreria querystring es usada. Mientras que si es
+//exteded=true, se usa la libreria qs para el parsin (analisis).
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//esto tambien se podria haber encadenado asi: app.get(path, handler).post(path, handler)
+//pero se usa asi para mostrar que metodo depende de body-parser
+app.post('/name', (req, res) => {
     //cabe recalcar que para que los valores se vean reflejados, los key del objeto req.body
     //deben ser iguales que el valor de name='key' en el input que contiene la action con el
     //endpoint correspondiente ('/name')
+    //para que se añadan los valores a req.body, el body-parser debe estar configurado
+    //correctamente
     let { first: firstName, last } = req.body
     res.json({
         name: `${firstName} ${last}`,
