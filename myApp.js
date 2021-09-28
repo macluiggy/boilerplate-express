@@ -151,8 +151,15 @@ app.get('/name', (req, res) => {
     res.json({
         name: `${firstName} ${last}`,
     })
+    //lo de arriba es para obtener un json poninedo un link con el formato correspondiente
+    //en cambio lo que sigue, el metodo post, sirve para mandar los datos directamente desde
+    //un html form, estos se van a guardar en el objeto req.body
+}).post('/name', (req, res) => {
+    //cabe recalcar que para que los valores se vean reflejados, los key del objeto req.body
+    //deben ser iguales que el valor de name='key' en el input que contiene la action con el
+    //endpoint correspondiente
+    let { first: firstName, last } = req.body
+    res.json({
+        name: `${firstName} ${last}`,
+    })
 })
-.post('/search', bodyParser.urlencoded({ extended: false }), (req, res) => {
-    console.log(req)
-})
-//commentario en test
