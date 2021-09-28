@@ -157,7 +157,7 @@ app.get('/name', (req, res) => {
 }).post('/name', (req, res) => {
     //cabe recalcar que para que los valores se vean reflejados, los key del objeto req.body
     //deben ser iguales que el valor de name='key' en el input que contiene la action con el
-    //endpoint correspondiente
+    //endpoint correspondiente ('/name')
     let { first: firstName, last } = req.body
     res.json({
         name: `${firstName} ${last}`,
