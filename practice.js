@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express()
 require('dotenv').config()
-//helo
+var bodyParser = require('body-parser');
+
 module.exports = app
 
 /*app.get('/', (req, res) => {
@@ -12,7 +13,7 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/views/practice.html')
 })
 
-app.use('/public/', express.static(__dirname + '/public/'))
+app.use('/public', express.static(__dirname + '/public'))
 
 app.get('/json', (req, res) => {
 	let msg = 'hola mi compa';
@@ -53,12 +54,18 @@ app.get('/user/:user/id/:id', (req, res, next) => {
 })
 
 app.get('/nombre', (req, res) => {
-	//nombre?nombre=nombre&apellido=apellido
-	let { nombre, apellido } = req.query;
+		//nombre?nombre=nombre&apellido=apellido
+		let { nombre, apellido } = req.query;
 
-	res.json({
-		nombre: nombre,
-		apellido: apellido,
+		res.json({
+			nombre: nombre,
+			apellido: apellido,
+		})
 	})
-})
-//
+	.use(bodyParser.urlencoded({ extended: false }))
+	.post('/name', (req, res) => {
+		let { first, last } = req.body
+		res.json({
+			name: `${first} ${last}`
+		})
+	})

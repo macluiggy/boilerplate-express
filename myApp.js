@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 //esto sirve para ejecutar el paquete que servira para traer las enviroment variables
 require('dotenv').config();
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 module.exports = app;
 
