@@ -51,3 +51,13 @@ app.get('/user/:user/id/:id', (req, res, next) => {
 		'Reviewed in': time,
 	})
 })
+
+app.get('/nombre', (req, res) => {
+	//nombre?nombre=nombre&apellido=apellido
+	let { nombre, apellido } = req.query;
+
+	res.json({
+		nombre: nombre,
+		apellido: apellido,
+	})
+})
